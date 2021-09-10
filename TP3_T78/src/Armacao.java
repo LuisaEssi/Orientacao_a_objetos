@@ -13,9 +13,7 @@ public class Armacao {
 	
 	// -------------Construtor --------------
 	
-
-
-			
+		
 	//get and set
 	public String getClassificacao() {
 		return classificacao;
