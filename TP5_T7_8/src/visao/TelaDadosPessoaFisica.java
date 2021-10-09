@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 
 
 
+
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
@@ -13,9 +14,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import controle.*;
 
+/**
+ * Classe de construção da tela com dados dos cliente e funcionarios com botões para salvar, excluir, comprar(cliente ir para compra) e produto(funciorio adicionar produto)
+ * @author Luisa Caroline
+ * @version Out 2021
+ */
 public class TelaDadosPessoaFisica implements ActionListener {
 
 	private JFrame janela;
+	
 	private JLabel labelNome = new JLabel("Nome: ");
 	private JTextField valorNome;
 	private JLabel labelCpf = new JLabel("CPF: ");
@@ -48,6 +55,13 @@ public class TelaDadosPessoaFisica implements ActionListener {
 	private int opcao;
 	private String s;
 
+	/**
+	 * Construção da Tela de inserir, visualisar e editar pessoa física (funcionario ou cliente)
+	 * @param op inteiro que determina a tela que vai ser exibida ao usuario
+	 * @param d parametro da classe de controle objetos com os dados do objeto a ser exibido/editado
+	 * @param p parametro da Tela Lista de Pessoa
+	 * @param pos inteiro com a posicao específica do objeto
+	 */
 	public void inserirEditar(int op, ControleObjetos d, 
 			TelaListaPessoa p, int pos) {
 
@@ -199,16 +213,24 @@ public class TelaDadosPessoaFisica implements ActionListener {
 		janela.setResizable(false);
 	}
 	
+	/**
+	 * Metodo para pegar acao em um botão
+	 * Os botões são:
+	 * (1) Salvar, que salva alterações ou cadastro de clientes ou funcionários
+	 * (2) Excluir,  que exclui cadastro de clientes ou funcionários
+	 * (3) Comprar, que inicia uma compra a partir de um cliente
+	 * (4) Produto, que inicia o modo de alteração ou cadastro de novos produtos por parte dos funcionários
+	 */
 @Override
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 		if(src == botaoSalvar) {
 			try {
 				boolean res;
-				if(opcao == 1) {//cadastro de novo funcionario
+				if(opcao == 1) {//cadastro de novo cliente
 					novoDado[0] = Integer.toString(dados.getQtdclientes());
 				}
-				else if (opcao == 2) { // cadastro de novo cliente
+				else if (opcao == 2) { // cadastro de novo funcionario
 					novoDado[0] = Integer.toString(dados.getQtdfuncionarios());
 				}
 				else {// edicao de dado existente
@@ -219,35 +241,38 @@ public class TelaDadosPessoaFisica implements ActionListener {
 				novoDado[2] =  valorEmail.getText();
 				novoDado[3] =  valorTelefone.getText();
 				novoDado[4] =  valorCpf.getText();
-				
-				
-
+									
 				if (opcao == 1 || opcao == 3) {
 					novoDado[5] =  valorEndereco.getText();
-					res = dados.inserirEditarCliente(novoDado);
-				} else {
-					novoDado[5] =  valorFuncao.getText();
-					res = dados.inserirEditarFuncionario(novoDado);
-					novoDado[6] =  valorHorarioDeTrabalho.getText();
-					res = dados.inserirEditarFuncionario(novoDado);
-					novoDado[7] =  valorSalarioHora.getText();
-					res = dados.inserirEditarFuncionario(novoDado);
-					
-					
-				}
 
+					res = dados.inserirEditarCliente(novoDado);
+					
+				} 
+				else {
+					novoDado[5] =  valorFuncao.getText();
+					novoDado[6] =  valorHorarioDeTrabalho.getText();
+					novoDado[7] =  valorSalarioHora.getText();
+					
+					res = dados.inserirEditarFuncionario(novoDado);
+					}
+				
 				if(res) {
 					mensagemSucessoCadastro();
 				}
-					else mensagemErroCadastro();
-
-			} catch (NullPointerException exc1) {
+				else { 
+						mensagemErroCadastro();
+				}
+				
+			}
+			catch (NullPointerException exc1) {
 				mensagemErroCadastro();
 			} catch (NumberFormatException exc2) {
 				mensagemErroCadastro();
-			}
-			janela.dispose();
-		}
+			} 
+			
+			}			
+		
+		
 
 		if(src == botaoExcluir) {
 			boolean res = false;
@@ -277,25 +302,42 @@ public class TelaDadosPessoaFisica implements ActionListener {
 		}	
 	}
 
+	/**
+	 * Mensagem de sucesso ao excluir
+	 */
 	public void mensagemSucessoExclusao() {
 		JOptionPane.showMessageDialog(null, "Os dados foram excluidos com sucesso!", null, 
 				JOptionPane.INFORMATION_MESSAGE);
-		janela.dispose();
+//		janela.dispose();
 	}
 
+	/**
+	 * Mensagem de sucesso ao cadastrar
+	 */
 	public void mensagemSucessoCadastro() {
 		JOptionPane.showMessageDialog(null, "Os dados foram salvos com sucesso!", null, 
 				JOptionPane.INFORMATION_MESSAGE);
-		janela.dispose();
+//		janela.dispose();
 	}
 
+	
+	/**
+	 * Mensagem com erro ao salvar dados
+	 */
 	public void mensagemErroCadastro() {
 		JOptionPane.showMessageDialog(null,"ERRO AO SALVAR OS DADOS!\n "
-				+ "Pode ter ocorrido um dos dois erros a seguir:  \n"
+				+ "Pode ter ocorrido algum dos erros a seguir:  \n"
 				+ "1. Nem todos os campos foram preenchidos \n"
-				+ "2. CPF e telefone devem conter apenas números", null, 
+				+ "2. CPF e telefone devem conter apenas números \n"
+				+ "3. Telefone sem DDD ou com mais de 11 dígitos \n"
+				+ "4. E-mail sem @ ou começando com @ \n"
+				+ "5. CPF sem os exatos 11 dígitos \n" 
+				+ "6. Nome escrito com números"
+				
+				
+				, null, 
 				JOptionPane.ERROR_MESSAGE);
-		janela.dispose();
+//		janela.dispose();
 	}
 
 }

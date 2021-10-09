@@ -1,5 +1,11 @@
 package modelo;
-import java.util.ArrayList;
+
+/**
+ * Classe para a construção do objeto Compra
+ * @author Luisa Caroline
+ * @version Out 2021
+ */
+
 public class Compra {
 	
 	private String produtosSelecionados; //Lente de contato ou óculos
@@ -10,13 +16,17 @@ public class Compra {
 //	private double valorTotal;
 	
 	private Cliente cliente;	 //agregação
-
-	private ArrayList<LenteDeContato> compraContato = new ArrayList<LenteDeContato>();
-	private ArrayList<Oculos> compraOculos = new ArrayList<Oculos>();
-	
 	
 // --------------construtor-----------
 	
+	/**
+	 * @param produtosSelecionados string de produtos selecionados
+	 * @param quantidadeDoProduto inteiro de quantidade de produto	
+	 * @param codigoDaCompra inteiro de codigo da compra
+	 * @param formaDePagamento string de forma de pagamento
+	 * @param frete string de frente
+	 * @param cliente objeto cliente
+	 */
 	public Compra(String produtosSelecionados, int quantidadeDoProduto, int codigoDaCompra, String formaDePagamento,
 			String frete, Cliente cliente) {			//) {
 		super();
@@ -29,114 +39,87 @@ public class Compra {
 	}
 		
 	// get and set
+	/**
+	 *get produtos selecionados
+	 * @return string produtosSelecionados
+	 */
 	public String getProdutosSelecionados() {
 		return produtosSelecionados;
 	}
 	
+	/**
+	 * set produtos selecionados
+	 * @param produtosSelecionados string de produtos selecionados
+	 */
 	public void setProdutosSelecionados(String produtosSelecionados) {
 		this.produtosSelecionados = produtosSelecionados;
 	}
+	
+	/**
+	 * get quantidade do produto
+	 * @return int de quantidade de produtos
+	 */
 	public int getQuantidadeDoProduto() {
 		return quantidadeDoProduto;
 	}
+	
+	/**
+	 * get quantidadeDoProduto
+	 * @param quantidadeDoProduto inteiro de quantidade do produto
+	 */
 	public void setQuantidadeDoProduto(int quantidadeDoProduto) {
 		this.quantidadeDoProduto = quantidadeDoProduto;
 	}
+	/**
+     * get código da compra
+	 * @return inteiro do código da compra
+	 */
 	public int getCodigoDaCompra() {
 		return codigoDaCompra;
 	}
+	/**
+     * set codigo da compra
+	 * @param codigoDaCompra inteiro código da compra
+	 */
 	public void setCodigoDaCompra(int codigoDaCompra) {
 		this.codigoDaCompra = codigoDaCompra;
 	}
+	/**
+     * get forma de pagamento
+	 * @return string de forma de pagamento
+	 */
 	public String getFormaDePagamento() {
 		return formaDePagamento;
 	}
+	/**
+     *  set forma de pagamento
+	 * @param formaDePagamento string de forma de pagamento
+	 */
 	public void setFormaDePagamento(String formaDePagamento) {
 		this.formaDePagamento = formaDePagamento;
 	}
+	/**
+     * get frete
+	 * @return string de frete
+	 */
 	public String getFrete() {
 		return frete;
 	}
+	/**
+     * set frete
+	 * @param frete string de frete
+	 */
 	public void setFrete(String frete) {
 		this.frete = frete;
-	} 
+	} 	
 	
-	
-	
+	/**
+     * get cliente
+	 * @return vetor de objetos cliente
+	 */
 	public Cliente getCliente() {
 		return this.cliente;
 	}
-	
-	
-	
-	public ArrayList<LenteDeContato> getCompraContato() {
-		return compraContato;
-	}
-
-	public void setCompraContato(ArrayList<LenteDeContato> compraContato) {
-		this.compraContato = compraContato;
-	}
-
-
-	public ArrayList<Oculos> getCompraOculos() {
-		return compraOculos;
-	}
-
-	public void setCompraOculos(ArrayList<Oculos> compraOculos) {
-		this.compraOculos = compraOculos;
-	}
-	
-		
-	
-	//-------------Metodos-----------------
-
-		public int quantidadeCompraContato() {
-			return compraContato.size();
-		}
-		
-		public int quantidadeCompraOculos() {
-			return compraOculos.size();
-		}
-		
-	
-		public void adicionaCliente(Cliente nomeCliente) {
-			//adicionaocliente
-			nomeCliente.getNome(); 
-
-		}
-		
-		//Sobrecarga do metodo compra
-		
-		public void compra(Oculos oculos) {
-			compraOculos.add(oculos);
-		}
-		
-		public void compra(LenteDeContato contato) {
-			compraContato.add(contato);
-		}
-		
-		
-		
-		public double getValorTotal() {
-			
-			double valor = 0;
-			
-			if (compraContato.size() > 0) {
-			for(int i = 0; i < compraContato.size(); i++) {
-				valor += compraContato.get(i).getValorContato();
-			}
-			
-			}
-			
-			if (compraOculos.size() > 0) {
-			for(int i = 0; i < compraOculos.size(); i++) {
-				valor += compraOculos.get(i).getValorOculos();
-			}
-			
-			}
-	
-			return valor;
-		}
 
 
 }

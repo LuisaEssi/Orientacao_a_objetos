@@ -2,13 +2,18 @@ package visao;
 
 import java.awt.*;
 
+
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+
 
 import controle.*;
 
+/**
+ * Classe de construção da tela de escolha de funcionario (botão funcionário) e cliente (botão cliente)
+ * @author Luisa Caroline
+ * @version Out 2021
+ */
 public class TelaFuncionarioOuCliente implements ActionListener{
 		
 		private static JFrame janela = new JFrame("Usuário");
@@ -16,9 +21,15 @@ public class TelaFuncionarioOuCliente implements ActionListener{
 		private static JButton funcionario = new JButton("Funcionário");
 		private static JButton cliente = new JButton("Cliente");
 		
+		/**
+		 * Classe de controle de todos objetos 
+		 */
 		public static ControleObjetos dados = new ControleObjetos();
 		
 				
+		/**
+		 * Método que cria a janela de seleção de funcionário ou cliente.
+		 */
 		public TelaFuncionarioOuCliente() {
 			titulo.setFont(new Font("Arial", Font.BOLD, 14));
 			titulo.setBounds(120, 10, 150, 30);
@@ -40,6 +51,10 @@ public class TelaFuncionarioOuCliente implements ActionListener{
 			cliente.addActionListener(this);
 		}
 			
+		/**
+		 * Abre a janela de seleção do funcionário e cliente. Capta a seleção dos botões de funcionário e cliente
+		 * @param args string args
+		 */
 		public static void main(String[] args) {
 			TelaFuncionarioOuCliente menu = new TelaFuncionarioOuCliente();
 			
@@ -49,18 +64,21 @@ public class TelaFuncionarioOuCliente implements ActionListener{
 		}
 		
 
+		/**
+		 * Abre uma nova janela a partir dos botões selecionados pelo usuário
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object src = e.getSource();
 			if(src == cliente) {
 
 				new TelaListaPessoa().mostrarDados(dados, 1); //mostra lista de cliente
-				
+				janela.dispose();
 								}
 			
 			if(src == funcionario) {
 			new TelaListaPessoa().mostrarDados(dados, 2);  //mostra lista de funcionarios
-
+			janela.dispose();
 				}
 
 	

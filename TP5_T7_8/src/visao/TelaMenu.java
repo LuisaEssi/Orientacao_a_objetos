@@ -2,13 +2,14 @@ package visao;
 
 import java.awt.*;
 
-
-
-
 import java.awt.event.*;
 import javax.swing.*;
-import controle.*;
 
+/**
+ * Classe de construção da tela inicial da loja de óculos com as opções de comprar e entrar
+ * @author Luisa Caroline
+ * @version Out 2021
+ */
 public class TelaMenu implements ActionListener {
 	
 	private static JFrame janela = new JFrame("Loja de Óculos");
@@ -17,6 +18,9 @@ public class TelaMenu implements ActionListener {
 	private static JButton entrar = new JButton("Entrar");
 	
 	
+	/**
+	 * Método para montar a tela inicial do programa
+	 */
 	public TelaMenu() {
 		titulo.setFont(new Font("Arial", Font.BOLD, 18));
 		titulo.setBounds(120, 10, 150, 30);
@@ -36,6 +40,10 @@ public class TelaMenu implements ActionListener {
 		janela.setVisible(true);
 	}
 	
+	/**
+	 * Inicia a tela principal da loja, e recebe o clique dos botões
+	 * @param args string args
+	 */
 	public static void main(String[] args) {
 		TelaMenu menu = new TelaMenu();
 		
@@ -44,6 +52,9 @@ public class TelaMenu implements ActionListener {
 		
 	}
 	
+	/**
+	 *abre uma nova tela a partir da seleção de botões do usuário
+	 */
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 		

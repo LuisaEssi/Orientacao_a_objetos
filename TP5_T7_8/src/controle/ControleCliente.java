@@ -1,16 +1,32 @@
 package controle;
 import modelo.*;
-import visao.TelaListaPessoa;
+
+/**
+ * Requisita os valores nos gets da classe cliente. Faz a busca de cliente e retorna strings com clientes e seus atributos. 
+ * @author Luisa Caroline
+ * @version Out 2021
+ */
 
 public class ControleCliente {
-	private Cliente[] cli;
+	private static Cliente[] cli;
 	private int qtdClientes;
+	
+	/**
+	 * Metodo para adquirir os clientes e sua quantindade
+	 * @param d objeto tipo Dados com acesso aos atributos do cliente
+	 */
 	
 	public ControleCliente(ControleObjetos d) {
 		cli = d.getClientes();
 		qtdClientes = d.getQtdclientes();
 		
 	}
+	
+	/**
+	 * Manda dados do cliente e gera um array string de retorno para a lista
+	 * Faz um laço para passar por todas as posicões do cliente
+	 * @return string com o nome do cliente
+	 */
 	
 	public String[] getNomeCliente() {
 		String[] s = new String[qtdClientes];
@@ -19,7 +35,14 @@ public class ControleCliente {
 		}
 		return s;
 	}
-	
+	/**
+	 * Pesquisa por nome ou cpf nos dados da lista de clientes
+	 * A pesquisa funciona com duas condições:
+	 * (1) O nome pode conter parte da string pesquisada  
+	 * (2) O cpf deve conter toda a string pesquisada
+	 * @param pesCli string com a nome(parte) ou cpf(completo) 
+	 * @return array de string com o nome do cliente
+	 */
 	
 	public String[] getPesquisaCliente(String pesCli) {
 		String[] s = new String[qtdClientes];
@@ -29,32 +52,6 @@ public class ControleCliente {
 			}
 		} 
 		return s;
-	}
-	
-	
-	public String getNome(int i) {		
-		return cli[i].getNome();
-	}
-	
-	public String getCPF(int i) {
-		String numCPF = String.valueOf(cli[i].getCpf());
-		return numCPF;
-	}	
-	
-	public void setQtdClientes(int qtdClientes) {
-		this.qtdClientes = qtdClientes;
-	}
-	
-	public String getTelefone(int i) {		
-		return cli[i].getTelefone();
-	}	
-	
-	public String getEmail(int i) {		
-		return cli[i].getEmail();
-	}	
-	
-	public String getEndereco(int i) {		
-		return cli[i].getEndereco();
 	}	
 	
 }

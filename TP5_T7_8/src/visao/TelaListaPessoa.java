@@ -6,7 +6,11 @@ import javax.swing.*;
 import javax.swing.event.*;
 import controle.*;
 
-
+/**
+ * Classe de construção da tela com lista de dados dos cliente e funcionarios com botões para cadastro,atualiza, pesquisa de clientes e funcionarios
+ * @author Luisa Caroline
+ * @version Out 2021
+ */
 public class TelaListaPessoa implements ActionListener, ListSelectionListener {	
 	
 	private String pesCliente;
@@ -32,6 +36,11 @@ public class TelaListaPessoa implements ActionListener, ListSelectionListener {
 	private String[] listaNomes = new String[50];
 	
 
+	/**
+	 * Metodo para mostrar listas com funcionario ou cliente
+	 * @param d parametro da classe de controle objetos com os dados do objeto a ser exibido/editado
+	 * @param op  inteiro que determina qual lista vai ser exibida ao usuario
+	 */
 	public void mostrarDados(ControleObjetos d, int op){
 		dados = d;
 
@@ -46,8 +55,6 @@ public class TelaListaPessoa implements ActionListener, ListSelectionListener {
 			pesquisaCliente = new JButton("Pesquisar");
 			barraCliente = new JTextField(200);
 	
-			
-			System.out.println(listaNomes);
 			
 			titulo.setFont(new Font("Arial", Font.BOLD, 15));
 			titulo.setBounds(90, 10, 250, 30);
@@ -135,15 +142,32 @@ public class TelaListaPessoa implements ActionListener, ListSelectionListener {
 	}
 
 
+	/**
+	 * get pesquisa cliente
+	 * @return string cliente
+	 */
 	public String getPesCliente() {
 		return pesCliente;
 	}
 
+	/**
+	 * get pesquisa funcionario
+	 * @return string funcionario
+	 */
 	public String getPesFuncionario() {
 		return pesFuncionario;
 	}
 
 	//Captura eventos relacionados aos botoes da interface
+	/**
+	 * Metodo de captura eventos relacionados aos botoes da interface
+	 * (1) cadastro cliente
+	 * (2) cadastro funcionario
+	 * (3) atualiza funcionario (atualiza lista)
+	 * (4) atualiza cliente (atualiza lista)
+	 * (5) pesquisa cliente (por cpf e nome)
+	 * (6) pesquisa funcionario (por cpf e nome)
+	 */
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 		
@@ -180,23 +204,27 @@ public class TelaListaPessoa implements ActionListener, ListSelectionListener {
 			listaFuncionariosCadastrados.setListData(new ControleFuncionario(dados).getPesquisaFuncionario(pesFuncionario));
 			listaFuncionariosCadastrados.updateUI();
 		}
-
 	}
 
 	//Captura eventos relacionados ao JList
+	/**
+	 *Metodo de eventos relacionados ao JList 
+	 *(1) Lista Clientes (abre tela de dados para edicao ou exclusão ) 
+	 *(2) Lista Funcionarios (abre tela de dados para edicao ou exclusão) 
+	 */
 	public void valueChanged(ListSelectionEvent e) {
 		Object src = e.getSource();
 
 		if(e.getValueIsAdjusting() && src == listaClientesCadastrados) {
 			new TelaDadosPessoaFisica().inserirEditar(3, dados, this, 
 					listaClientesCadastrados.getSelectedIndex());
-			janela.dispose();
+//			janela.dispose();
 		}
 
 		if(e.getValueIsAdjusting() && src == listaFuncionariosCadastrados) {
 			new TelaDadosPessoaFisica().inserirEditar(4, dados, this, 
 					listaFuncionariosCadastrados.getSelectedIndex());
-			janela.dispose();
+//			janela.dispose();
 		}
 	}
 

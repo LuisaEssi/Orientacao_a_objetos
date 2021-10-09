@@ -3,12 +3,18 @@ package visao;
 
 import java.awt.*;
 
+
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
+
 
 import controle.*;
 
+/**
+ * Classe de construção da tela com as opçoes de compra dos produtos (óculos ou lente de contato). Os botões que se pode utilizar são os de óculos(lente e armacao) e lente de contato
+ * @author Luisa Caroline
+ * @version Out 2021
+ */
 public class TelaLoja implements ActionListener{
 		
 		private static JFrame janela = new JFrame("Escolha do produto");
@@ -16,9 +22,15 @@ public class TelaLoja implements ActionListener{
 		private static JButton oculos = new JButton("Óculos");
 		private static JButton contato = new JButton("Lentes de contato");
 		
+		/**
+		 * Classe de controle de todos objetos 
+		 */
 		public static ControleObjetos dados = new ControleObjetos();
 		
 				
+		/**
+		 * Metodo para montagem da janela da Loja
+		 */
 		public TelaLoja() {
 			titulo.setFont(new Font("Arial", Font.BOLD, 14));
 			titulo.setBounds(70, 10, 200, 30);
@@ -40,6 +52,10 @@ public class TelaLoja implements ActionListener{
 			contato.addActionListener(this);
 		}
 			
+		/**
+		 * Recebe o clique do usuário em alguma das opções (lente de contato e óculos) 
+		 * @param args string args
+		 */
 		public static void main(String[] args) {
 			TelaLoja menu = new TelaLoja();
 			
@@ -49,6 +65,9 @@ public class TelaLoja implements ActionListener{
 		}
 		
 
+		/**
+		 * abre uma janela de acordo com a opção escolhida pelo usuário
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object src = e.getSource();

@@ -11,8 +11,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import controle.*;
 
+/**
+ * Classe de construção da tela com dados dos produtos e botões para salvar, excluir, voltar, escolher lente, detalhes do oculos, detalhes da compra e finalizar compra
+ * @author Luisa Caroline
+ * @version Out 2021
+ */
 	public class TelaDadosProdutos implements ActionListener {
 		private JFrame janela;
+		private int estoqueContato;
+		private int estoqueLente;
+		private int estoqueArmacao;
+		
 //				------------Armacao-------
 		private double valorTotalOculos; 
 		
@@ -82,6 +91,8 @@ import controle.*;
 		private JLabel labelCvalorContato = new JLabel("Valor da Lente e Contato (R$): ");
 		private JTextField valorCvalorContato;		
 		
+// ---------------------------Oculos -----------------------		
+		
 		private JLabel CmaterialDaLente; 
 		private JLabel CtipoDeDescarte;
 		private JLabel Cmarca;
@@ -105,13 +116,21 @@ import controle.*;
 		private String[] novoDadoArm = new String[100];
 		private String[] novoDadoCon = new String[100];
 		private String[] novoDadoLen = new String[100];
-					
+		private String[] novoDadoOcu = new String[100];
+		
 		private static ControleObjetos dados;
 		
 		private int posicao;
 		private int opcao;
 		private String s;
 
+		/**
+		 * Construção da Tela de inserir, visualizar e editar produtos (lente, lente de contato, armacao e oculos)
+		 * @param op inteiro que determina a tela que vai ser exibida ao usuario
+		 * @param d parametro da classe de controle objetos com os dados do objeto a ser exibido/editado
+		 * @param p parametro da Tela Lista de Produtos
+		 * @param pos inteiro com a posicao específica do objeto
+		 */
 		public void inserirEditar(int op, ControleObjetos d, 
 				TelaListaProdutos p, int pos) {
 		
@@ -158,6 +177,7 @@ import controle.*;
 				valorLcorDaLente = new JTextField(200);
 				valorLlenteID = new JTextField(200);
 				valorLestoqueLente = new JTextField(200);
+
 		
 			} else if (op == 3 || op == 9) { 	//"Funcionário Editar Lente";
 				valorLtipoDeLente = new JTextField(dados.getLente()[pos].getTipoDeLente(), 200);
@@ -182,7 +202,7 @@ import controle.*;
 				valorAmarca = new JTextField(200);
 				valorAvalorDaArmacao = new JTextField(200);
 				valorAestoqueArmacao = new JTextField(200);
-				
+								
 			
 		
 			} else if (op == 5 || op == 7) { //"Funcionário Editar Lente de Contato";
@@ -212,7 +232,7 @@ import controle.*;
 				
 			} else if(op ==10) {
 				
-				valorAClassificacao = new JTextField(dados.getArmacao()[TelaListaProdutos.getPosicaoArmacao()].getClassificacao(), 200);
+				valorAClassificacao = new JTextField(dados.getArmacao()[pos].getClassificacao(), 200);
 				valorAcorDaArmacao = new JTextField(dados.getArmacao()[TelaListaProdutos.getPosicaoArmacao()].getCorDaArmacao(), 200);
 				valorLtipoDeLente = new JTextField(dados.getLente()[TelaListaProdutos.getPosicaoLente()].getTipoDeLente(), 200);
 				
@@ -343,12 +363,10 @@ import controle.*;
 			botaodadosReceita.setBounds(20, 270, 160,30);	
 			botaoDetalhesCompra.setBounds(200, 270, 180,30);	
 			botaoIrLente.setBounds(180, 230, 200,30);
-			botaoSalvar.setBounds(100, 230, 100, 30);
-			botaoExcluir.setBounds(120, 230, 100, 30);
+			botaoSalvar.setBounds(90, 230, 100, 30);
+			botaoExcluir.setBounds(210, 230, 100, 30);
 			botaoDetalhesOculos.setBounds(180, 230, 200,30);
-			
-			
-			
+				
 			valorCTotalContato = dados.getContato()[pos].getValorContato();
 			
 //			------------------ADD JANELA ---------------------------
@@ -566,13 +584,14 @@ import controle.*;
 	 
 ////			//exibir oculos e finalizar compra	
 			if (op == 10) { 
+				
 				labelLtipoDeLente.setBounds(20, 80, 180, 25);
 				valorTotalOculos = ControleOculos.getValorOculos((dados.getLente()[TelaListaProdutos.getPosicaoLente()]),
 						(dados.getArmacao()[TelaListaProdutos.getPosicaoArmacao()]));
 				
-				AClassificacao = new JLabel(dados.getArmacao()[pos].getClassificacao());
-				AcorDaArmacao = new JLabel( dados.getArmacao()[pos].getCorDaArmacao());
-				LtipoDeLente = new JLabel(dados.getLente()[pos].getTipoDeLente());
+				AClassificacao = new JLabel(dados.getArmacao()[TelaListaProdutos.getPosicaoArmacao()].getClassificacao());
+				AcorDaArmacao = new JLabel( dados.getArmacao()[TelaListaProdutos.getPosicaoArmacao()].getCorDaArmacao());
+				LtipoDeLente = new JLabel(dados.getLente()[TelaListaProdutos.getPosicaoLente()].getTipoDeLente());
 				
 				AClassificacao.setBounds(200, 20, 180, 25);			
 				AcorDaArmacao.setBounds(200, 50, 180, 25);
@@ -608,11 +627,24 @@ import controle.*;
 
 			botaoSalvar.addActionListener(this);
 			botaoExcluir.addActionListener(this);
-			botaoFinalizar.addActionListener(this);
+
 
 			
 		}
-
+		
+	/**
+	 * Metodo para pegar acao em um botão
+	 * Os botões são:
+	 * (1) Salvar, que salva alterações ou edições de uma armação, lente ou lente de contato
+	 * (2) Excluir, que exclui uma armação, lente ou lente de contato
+	 * (4) Finalizar compra, que finaliza a compra de algum produto
+	 * (3) Escolher Lente, que direciona o usuário para lista de lente após a escolha de uma armação
+	 * (4) Voltar, que volta para tela anterior
+	 * (5) Detalhes do Óculos, que exibe um resumo do óculos comprado
+ 	 * (6) Adicionar Receita, que recebe as informações de receita do usuário (não implementado)
+	 * (7) Detalhes da Compra, onde é exibido um resumo da compra do cliente.
+	 */
+		
 	@Override
 		public void actionPerformed(ActionEvent e) {
 			Object src = e.getSource();
@@ -632,6 +664,7 @@ import controle.*;
 						novoDadoArm[0] = Integer.toString(posicao);
 						novoDadoCon[0] = Integer.toString(posicao);
 						novoDadoLen[0] = Integer.toString(posicao);
+						novoDadoOcu[0] = Integer.toString(posicao);
 						}
 
 					
@@ -669,6 +702,23 @@ import controle.*;
 						res = dados.inserirEditarLenteDeContato(novoDadoCon);
 
 					}
+					else if (opcao == 8 || opcao == 9) {
+					novoDadoOcu[1] =  valorLtipoDeLente.getText();
+					novoDadoOcu[2] =  valorLmaterialDaLente.getText();
+					novoDadoOcu[3] =  valorLvalorDaLente.getText();
+					novoDadoOcu[4] =  valorLcorDaLente.getText();
+					novoDadoOcu[5] =  valorLlenteID.getText();
+					novoDadoOcu[6] =  valorLestoqueLente.getText();
+					novoDadoOcu[7] =  valorAClassificacao.getText();
+					novoDadoArm[8] =  valorAcorDaArmacao.getText();
+					novoDadoArm[9] =  valorAmaterialDaArmacao.getText();
+					novoDadoArm[10] =  valorAmodelo.getText();
+					novoDadoArm[11] =  valorAmarca.getText();
+					novoDadoArm[12] =  valorAvalorDaArmacao.getText();
+					novoDadoArm[13] =  valorAestoqueArmacao.getText();
+					
+					res = dados.inserirOculos(novoDadoCon);
+					}
 
 				if(res) {
 						mensagemSucessoCadastro();
@@ -682,7 +732,7 @@ import controle.*;
 				mensagemErroCadastro();
 			}			
 			
-				janela.dispose();
+			
 			}
 
 		if(src == botaoExcluir) {
@@ -707,49 +757,87 @@ import controle.*;
 				}
 				janela.dispose();
 			}
-			
-		if(src == botaoDetalhesOculos) {	 // vai para case e volta para exibir dados básicos do oculos
-			
-			new TelaListaProdutos().mostrarDados(dados, 8);
-			janela.dispose();
+		
+		
+		if(src == botaoIrLente) {
+			if((dados.getArmacao()[TelaListaProdutos.getPosicaoArmacao()].getEstoqueArmacao())>0) {
+				new TelaListaProdutos().mostrarDados(dados, 7); //abre lista de lentes disponíveis
+				janela.dispose();
+			}
+			else {
+				fimDeEstoque();
+				}
 			}
 			
-		if(src == botaoFinalizar) { // finaliza compras
+		if(src == botaoDetalhesOculos) {	 // vai para case e volta para exibir dados básicos do oculos
+			if((dados.getLente()[TelaListaProdutos.getPosicaoLente()].getEstoqueLente()) > 0) {
 				
+				new TelaListaProdutos().mostrarDados(dados, 8);
+
+				janela.dispose();
+			}
+			else {
+				fimDeEstoque();
+				}
+		}
+			
+		if(src == botaoFinalizar) { // finaliza compras
+			
+			
+		
 				if (opcao == 7) { // finaliza compra de Lente de Contato
-					valorCompraLenteDeContato();			 
+					
+					if((dados.getContato()[posicao].getEstoqueContato()) > 0) {
+					valorCompraLenteDeContato();	
+					// Subtrai do estoque da Lente de contato
+					estoqueContato = (dados.getContato()[posicao].getEstoqueContato()) - 1;
+					dados.getContato()[posicao].setEstoqueContato(estoqueContato);
+					}
+				
+				else {
+					fimDeEstoque();
+					}
 				}
 				
 				if (opcao == 10) { // finaliza compra de Óculos
 					
-					valorCompraOculos();					
+					valorCompraOculos();	
+					// Subtrai do estoque da Lente 
+					estoqueLente = (dados.getLente()[TelaListaProdutos.getPosicaoLente()].getEstoqueLente()) - 1;
+					dados.getLente()[TelaListaProdutos.getPosicaoLente()].setEstoqueLente(estoqueLente);
+					// Subtrai do estoque da Armacao
+					estoqueArmacao = (dados.getArmacao()[TelaListaProdutos.getPosicaoArmacao()].getEstoqueArmacao()) - 1;
+					dados.getArmacao()[TelaListaProdutos.getPosicaoArmacao()].setEstoqueArmacao(estoqueArmacao);
+					
 				}
+				
 				janela.dispose();
-			}
+					}
+			
+			
+			
 			
 		if(src == botaoVoltar) {
 				
 				if (opcao == 7) {		// volta para opção de escolher lente de contato
 					
 					new TelaListaProdutos().mostrarDados(dados, 1);
+					janela.dispose();
 				}
 				if (opcao == 8) {		// volta para opção de escolher armação
 					
 					new TelaListaProdutos().mostrarDados(dados, 2); 
+					janela.dispose();
 				}
 				
-				if (opcao == 10) { 		// volta para opção de escolher lente
+				if (opcao == 9) { 		// volta para opção de escolher lente
 					
 					new TelaListaProdutos().mostrarDados(dados, 7);
-				}
-				janela.dispose();
-			}	
-			
-		if(src == botaoIrLente) {
-					
-					new TelaListaProdutos().mostrarDados(dados, 7); //abre lista de lentes disponíveis
 					janela.dispose();
-			}
+				}
+				
+			}	
+
 			
 		if(src == botaodadosReceita) {
 				
@@ -762,46 +850,75 @@ import controle.*;
 			
 		}
 
+		/**
+		 * Mensagem de dados excluidos com sucesso
+		 */
 		public void mensagemSucessoExclusao() {
 			JOptionPane.showMessageDialog(null, "Os dados foram excluidos com sucesso!", null, 
 					JOptionPane.INFORMATION_MESSAGE);
-			janela.dispose();
+//			janela.dispose();
 		}
 
+		/**
+		 * Mensagem de dados salvos com sucesso
+		 */
 		public void mensagemSucessoCadastro() {
 			JOptionPane.showMessageDialog(null, "Os dados foram salvos com sucesso!", null, 
 					JOptionPane.INFORMATION_MESSAGE);
-			janela.dispose();
+//			janela.dispose();
 		}
 
+		/**
+		 * Mensagem de erro a salvar 
+		 */
 		public void mensagemErroCadastro() {
 			JOptionPane.showMessageDialog(null,"ERRO AO SALVAR OS DADOS!\n "
 					+ "Pode ter ocorrido um dos dois erros a seguir:  \n"
 					+ "1. O estoque, ID e/ou o valor não estão preenchidos com números \n"
 					+"2. Os dados podem estar vazios \n", null, 
 					JOptionPane.ERROR_MESSAGE);
-			janela.dispose();
+//			janela.dispose();
 		}
 
+		/**
+		 * Mensagem valor da lente de contato
+		 */
 		public void valorCompraLenteDeContato() {
 			JOptionPane.showMessageDialog(null, "O valor da sua Lente de Contato é de R$ " 
 					+ valorCTotalContato, null, 
 					JOptionPane.INFORMATION_MESSAGE);
+		
 			janela.dispose();
 		}
 
+		/**
+		 * Mensagem de valor do oculos
+		 */
 		public void valorCompraOculos() {
-			JOptionPane.showMessageDialog(null, "O valor do seu Óculos é de R$ " 
+				JOptionPane.showMessageDialog(null, "O valor do seu Óculos é de R$ " 
 					+ valorTotalOculos, null, 
 					JOptionPane.INFORMATION_MESSAGE);	
+			
 			janela.dispose();
-		}
+			
+		}		
+
+		/**
+		 * Mensagem de fim do estoque do produto
+		 */
+		public void fimDeEstoque() {
+			JOptionPane.showMessageDialog(null, "Não possui estoque deste produto \n", null, 
+					JOptionPane.INFORMATION_MESSAGE);	
+			}
 		
+		/**
+		 * Mensagem de não implementação da classe
+		 */
 		public void mensagemDeNaoImplementacao() {
 			JOptionPane.showMessageDialog(null, "Não foram implementadas as funcionalidades\n"
 					+ "relacionadas a Dados da Receita e Detalhes da Compra", null, 
 					JOptionPane.INFORMATION_MESSAGE);
-			janela.dispose();
+//			janela.dispose();
 		}
 		
 }

@@ -1,15 +1,33 @@
 package controle;
 import modelo.*;
 
+
+/**
+ * Requisita os valores nos gets da classe cliente. Faz a busca de cliente e retorna strings com clientes e seus atributos. 
+ * @author Luisa Caroline
+ * @version Out 2021
+ */
+
 public class ControleFuncionario {
-	private Funcionario[] fun;
+	private static Funcionario[] fun;
 	private int qtdFuncionarios;
+	
+	/**
+	 * Metodo para adquirir os funcionarios sua quantindade
+	 * @param d objeto tipo Dados com acesso aos atributos do funcionario
+	 */
 	
 	public ControleFuncionario(ControleObjetos d) {
 		fun = d.getFuncionarios();
 		qtdFuncionarios = d.getQtdfuncionarios();
 		
 	}
+	
+	/**
+	 * Manda dados do funcionario e gera um array string de retorno para a lista
+	 * Faz um laço para passar por todas as posicões do funcionario
+	 * @return string com o nome do funcionario
+	 */
 	
 	public String[] getNomeFuncionario() {
 		String[] s = new String[qtdFuncionarios];
@@ -19,7 +37,14 @@ public class ControleFuncionario {
 		
 		return s;
 	}
-	
+	/**
+	 * Pesquisa por nome ou cpf nos dados da lista de funcionarios
+	 * A pesquisa funciona com duas condições:
+	 * (1) O nome pode conter parte da string pesquisada  
+	 * (2) O cpf deve conter toda a string pesquisada
+	 * @param pesFun string com a nome(parte) ou cpf(completo) 
+	 * @return array de string com o nome do funcionario
+	 */
 	public String[] getPesquisaFuncionario(String pesFun) {
 		String[] s = new String[qtdFuncionarios];
 		for(int i = 0; i < qtdFuncionarios; i++) {
@@ -29,48 +54,6 @@ public class ControleFuncionario {
 		} 
 		return s;
 	}
-	
-	
-	
-	public int getQtd() {
-		return qtdFuncionarios;
-	}
 
-	public void setQtd(int qtd) {
-		this.qtdFuncionarios = qtd;
-	}
-	
-	public String getNome(int i) {		
-		return fun[i].getNome();
-	}
-	
-	public String getCPF(int i) {
-		String numCPF = String.valueOf(fun[i].getCpf());
-		return numCPF;
-	}	
-	
-	public void setQtdFuncionarios(int qtdFuncionarios) {
-		this.qtdFuncionarios = qtdFuncionarios;
-	}
-	
-	public String getTelefone(int i) {		
-		return fun[i].getTelefone();
-	}	
-	
-	public String getEmail(int i) {		
-		return fun[i].getEmail();
-	}	
-	
-	public String getSalarioHora(int i) {		
-		return fun[i].getSalarioHora();
-	}	
-	
-	public String getFuncao(int i) {		
-		return fun[i].getFuncao();
-	}	
-	
-	public String getHorarioDeTrabalho(int i) {		
-		return fun[i].getHorarioDeTrabalho();
-	}	
 }
 

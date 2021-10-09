@@ -6,6 +6,11 @@ import javax.swing.*;
 import javax.swing.event.*;
 import controle.*;
 
+/**
+ * Classe de construção da tela com lista de dados das armacoes, lentes e lentes de contato com botões para cadastro,atualiza, pesquisa de armacoes, lentes e lentes de contato 
+ * @author Luisa Caroline
+ * @version Out 2021
+ */
 
 public class TelaListaProdutos implements ActionListener, ListSelectionListener {		
 	
@@ -13,6 +18,10 @@ public class TelaListaProdutos implements ActionListener, ListSelectionListener 
 	private static int posicaoLente;
 	private static int opcao;
 	
+	private String pesContato;
+	private String pesArmacao;
+	private String pesLente;
+
 	private JFrame janela;
 	private JLabel titulo;
 	private JButton cadastroContato = new JButton("Cadastrar Lente de Contato");
@@ -26,7 +35,6 @@ public class TelaListaProdutos implements ActionListener, ListSelectionListener 
 	private JButton cadastroLente = new JButton("Cadastrar Lente");
 	private JButton atualizaLente = new JButton("Atualizar Lente");
 	private JButton editaLente = new JButton("Editar Lente");
-	
 	
 	private JLabel pesquisaGeral;
 	private JButton pesquisaArmacao = new JButton("Pesquisar");
@@ -47,6 +55,11 @@ public class TelaListaProdutos implements ActionListener, ListSelectionListener 
 	private String[] listaLente = new String[50];
 	
 	
+	/**
+	 * Metodo para mostrar listas com armacao, lente ou lente de contato
+	 * @param d parametro da classe de controle objetos com os dados do objeto a ser exibido/editado
+	 * @param op  inteiro que determina qual lista vai ser exibida ao usuario
+	 */
 	public void mostrarDados(ControleObjetos d, int op){
 		dados = d;
 
@@ -59,7 +72,7 @@ public class TelaListaProdutos implements ActionListener, ListSelectionListener 
 			listaContatoCadastrados = new JList<String>(listaContato);
 			janela = new JFrame("Lente de Contato");
 			titulo = new JLabel("Escolha sua Lente de Contato");
-			pesquisaGeral = new JLabel("Digite o tipo de descarte ou ...");
+			pesquisaGeral = new JLabel("Pesquise por tipo de descarte");
 						
 			titulo.setFont(new Font("Arial", Font.BOLD, 15));
 			titulo.setBounds(60, 10, 300, 30);
@@ -68,25 +81,24 @@ public class TelaListaProdutos implements ActionListener, ListSelectionListener 
 			listaContatoCadastrados.setVisibleRowCount(10);
 			barraContato = new JTextField(200);
 			
-			
 			pesquisaContato.setBounds(260, 200, 110, 30);
 			barraContato.setBounds(30, 200, 220, 30);
-			pesquisaGeral.setBounds(30, 170, 220, 30);
-			
+			pesquisaGeral.setBounds(30, 170, 280, 30);
+
 			janela.setLayout(null);
-			
+
 			janela.add(titulo);
 			janela.add(listaContatoCadastrados);
 			janela.add(pesquisaContato);
 			janela.add(barraContato);
 			janela.add(pesquisaGeral);
 
-			janela.setSize(400, 250);
+
+			janela.setSize(400, 280);
 			janela.setLocationRelativeTo(null);
 			janela.setResizable(false);
 			janela.setVisible(true);
-			
-
+			pesquisaContato.addActionListener(this);
 			listaContatoCadastrados.addListSelectionListener(this);
 
 			break;
@@ -97,23 +109,35 @@ public class TelaListaProdutos implements ActionListener, ListSelectionListener 
 			listaArmacaoCadastradas = new JList<String>(listaArmacao);
 			janela = new JFrame("Armação");
 			titulo = new JLabel("Escolha sua Armação");
+			pesquisaGeral = new JLabel("Pesquise por classificação (fem ou mas)");
 						
 			titulo.setFont(new Font("Arial", Font.BOLD, 15));
 			titulo.setBounds(60, 10, 300, 30);
 			listaArmacaoCadastradas.setBounds(20, 50, 350, 120);
 			listaArmacaoCadastradas.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 			listaArmacaoCadastradas.setVisibleRowCount(10);
+			
+			barraArmacao = new JTextField(200);
+			
+			pesquisaArmacao.setBounds(260, 200, 110, 30);
+			barraArmacao.setBounds(30, 200, 220, 30);
+			pesquisaGeral.setBounds(30, 170, 300, 30);
 
 			janela.setLayout(null);
 			
 			
 			janela.add(titulo);
 			janela.add(listaArmacaoCadastradas);
-			janela.setSize(400, 250);
+			janela.add(pesquisaArmacao);
+			janela.add(barraArmacao);
+			janela.add(pesquisaGeral);
+			
+			janela.setSize(400, 280);
 			janela.setLocationRelativeTo(null);
 			janela.setResizable(false);
 			janela.setVisible(true);
 
+			pesquisaArmacao.addActionListener(this);
 			listaArmacaoCadastradas.addListSelectionListener(this);
 			
 			break;
@@ -264,23 +288,34 @@ public class TelaListaProdutos implements ActionListener, ListSelectionListener 
 			listaLenteCadastradas = new JList<String>(listaLente);
 			janela = new JFrame("Lentes");
 			titulo = new JLabel("Escolha sua Lente");
+			pesquisaGeral = new JLabel("Pesquise pelo material da lente");
 
 			titulo.setFont(new Font("Arial", Font.BOLD, 14));
 			titulo.setBounds(90, 10, 250, 30);
 			listaLenteCadastradas.setBounds(20, 50, 350, 120);
 			listaLenteCadastradas.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 			listaLenteCadastradas.setVisibleRowCount(10);
+			
+			barraLente = new JTextField(200);
+			
+			pesquisaLente.setBounds(260, 200, 110, 30);
+			barraLente.setBounds(30, 200, 220, 30);
+			pesquisaGeral.setBounds(30, 170, 280, 30);
 
 			janela.setLayout(null);
 
 			janela.add(titulo);
 			janela.add(listaLenteCadastradas);
+			janela.add(pesquisaLente);
+			janela.add(barraLente);
+			janela.add(pesquisaGeral);
 
-			janela.setSize(400, 250);
+			janela.setSize(400, 280);
 			janela.setLocationRelativeTo(null);
 			janela.setResizable(false);
 			janela.setVisible(true);
-
+			
+			pesquisaLente.addActionListener(this);
 			listaLenteCadastradas.addListSelectionListener(this);			
 			
 			break;
@@ -297,39 +332,60 @@ public class TelaListaProdutos implements ActionListener, ListSelectionListener 
 	}
 
 	//Captura eventos relacionados aos botoes da interface
+   /**
+	 * Metodo de captura eventos relacionados aos botoes da interface
+	 * (1) edicao da armacao (feita por funcionario)
+	 * (2) cadastra nova armacao (feita por funcionario)
+	 * (3) edicao da lente (feita por funcionario)
+	 * (4) cadastra nova lente (feita por funcionario)
+	 * (5) edicao da lente de contato (feita por funcionario)
+	 * (6) cadastra nova lente  de contato(feita por funcionario)
+	 * (7) atualiza lente de contato (atualiza lista)
+	 * (8) atualiza armacao (atualiza lista)
+	 * (9) atualiza lente(atualiza lista)
+	 * (10) pesquisa lente de contato (por tipo de descarte)
+	 * (11) pesquisa armacao (por classificação)
+	 * (12) pesquisa lente (por material)
+	 */
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 		
 		//Edita Armacao
 			if(src == editaArmacao) {
 				new TelaListaProdutos().mostrarDados(dados, 6);
+				janela.dispose();
 			}
 		
 		//Cadastro nova Armacao
 			if(src == cadastroArmacao) {
 				new TelaDadosProdutos().inserirEditar(2, dados, this, 0);
+				janela.dispose();
 				
 			}	
 			
 		//Edita Lente
 			if(src == editaLente) {
 				new TelaListaProdutos().mostrarDados(dados, 5);	
+				janela.dispose();
 				
 			}
 		//Cadastro  nova Lente
 			if(src == cadastroLente) {
 				new TelaDadosProdutos().inserirEditar(4, dados, this, 0);
+				janela.dispose();
 				
 			}			
 		//Editar Lente de Contato
 			if(src == editaContato) {
 				
 				new TelaListaProdutos().mostrarDados(dados, 4);	
+				janela.dispose();
 				
 			}
 		//Cadastro nova Lente de  Contato
 		if(src == cadastroContato) {			
 			new TelaDadosProdutos().inserirEditar(6, dados, this, 0);
+			janela.dispose();
 			
 		}	
 				
@@ -353,10 +409,36 @@ public class TelaListaProdutos implements ActionListener, ListSelectionListener 
 			listaLenteCadastradas.setListData(new ControleLente(dados).getDadosLente());
 			listaLenteCadastradas.updateUI();
 		}
+		
+		if(src == pesquisaContato) {
+			pesContato = barraContato.getText();
+			listaContatoCadastrados.setListData(new ControleContato(dados).getPesquisaContato(pesContato));
+			listaContatoCadastrados.updateUI();
+		}
+		
+		
+		if(src == pesquisaArmacao) {
+			pesArmacao = barraArmacao.getText();
+			listaArmacaoCadastradas.setListData(new ControleArmacao(dados).getPesquisaArmacao(pesArmacao));
+			listaArmacaoCadastradas.updateUI();
+		}
+		
+		if(src == pesquisaLente) {
+			pesLente = barraLente.getText();
+			listaLenteCadastradas.setListData(new ControleLente(dados).getPesquisaLente(pesLente));
+			listaLenteCadastradas.updateUI();
+		}
 
 	}
 	
+	
 	//Captura eventos relacionados ao JList
+	/**
+	 *Metodo de eventos relacionados ao JList 
+	 *(1) Lista de Lentes de contato (abre tela de dados para edicao, exclusão ou visualizacao) 
+	 *(2) Lista de Lentes (abre tela de dados para edicao, exclusão ou visualizacao) 
+	 *(3) Lista de Armações (abre tela de dados para edicao, exclusão ou visualizacao)
+	 */
 	public void valueChanged(ListSelectionEvent e) {
 		Object src = e.getSource();
 
@@ -409,11 +491,19 @@ public class TelaListaProdutos implements ActionListener, ListSelectionListener 
 	
 	//Guarda a posição da Armacao
 
+	/**
+	 * get da posicao da armacao
+	 * @return posicao da armacao em um inteiro
+	 */
 	public static int getPosicaoArmacao() {
 		return posicaoArmacao;
 	}
 	
 	//Guarda a posição da Lente
+	/** 
+	 * get da posicao da lente
+	 * @return posicao da lente em um inteiro
+	 */
 	public static int getPosicaoLente() {
 		return posicaoLente;
 	}
